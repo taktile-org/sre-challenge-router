@@ -12,6 +12,8 @@ Your task is to write a router that takes into account multiple metrics and retu
 
 The setup is created using Docker and Docker Compose. You will need to have Docker and Docker Compose installed on your machine.
 
+To run the setup use `docker-compose up --build`. You can the use `curl http://0.0.0.0:8880` or `curl http://0.0.0.0:8881` to test the setup.
+
 ## Deliverables
 
 Your completed task should include the following:
