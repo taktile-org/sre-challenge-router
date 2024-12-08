@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  python_router:
+    build: ./python_router
+    ports:
+      - "8880:9000"
+    depends_on:
+      - backend_good
+      - backend_sometime_works
+      - backend_faulty
+
+  go_router:
+    build: ./go_router
+    ports:
+      - "8881:9000"
+    depends_on:
+      - backend_good
+      - backend_sometime_works
+      - backend_faulty
+
+  backend_good:
+    build: ./backends
+    environment:
+      - BACKEND_NAME="backend_good-0.1"
+      - FAILURE_RATE=0.0
+      - LOAD_PER_REQUEST_S=5
+    ports:
+      - "9001:9000"
+
+  backend_sometime_works:
+    build: ./backends
+    environment:
+      - BACKEND_NAME="backend_sometime_works-0.2"
+      - FAILURE_RATE=0.1
+      - LOAD_PER_REQUEST_S=1
+    ports:
+      - "9002:9000"
+
+  backend_faulty:
+    build: ./backends
+    environment:
+      - BACKEND_NAME="backend_faulty-0.9"
+      - FAILURE_RATE=0.9
+      - LOAD_PER_REQUEST_S=1
+    ports:
+      - "9003:9000"
+
+  backend_average:
+    build: ./backends
+    environment:
+      - BACKEND_NAME="backend_average-0.1"
+      - FAILURE_RATE=0.1
+      - LOAD_PER_REQUEST_S=3
+    ports:
+      - "9004:9000"
