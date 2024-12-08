@@ -9,6 +9,7 @@ services:
       - backend_good
       - backend_sometime_works
       - backend_faulty
+      - backend_average
 
   go_router:
     build: ./go_router
@@ -18,6 +19,7 @@ services:
       - backend_good
       - backend_sometime_works
       - backend_faulty
+      - backend_average
 
   backend_good:
     build: ./backends
