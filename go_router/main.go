@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"math/rand"
 	"net/http"
 )
 
@@ -35,12 +34,11 @@ func fetchBackend(url string) (BackendResponse, error) {
 func handler(w http.ResponseWriter, r *http.Request) {
 	backends := []string{
 		"http://backend_good:9000/",
-		"http://backend_sometime_works:9000/",
-		"http://backend_faulty:9000/",
 		"http://backend_average:9000/",
+		"http://backend_faulty:9000/",
 	}
 
-	backend := backends[rand.Intn(len(backends))]
+	backend := backends[0]
 
 	backend1Response, err := fetchBackend(backend)
 	if err != nil {
@@ -57,5 +55,5 @@ func main() {
 	fmt.Println("Go router running on port 9000")
 	if err := http.ListenAndServe(":9000", nil); err != nil {
 		fmt.Printf("Error starting server: %v\n", err)
-	}
+	} 
 }

@@ -11,17 +11,20 @@ services:
           target: /app
     depends_on:
       - backend_good
-      - backend_sometime_works
-      - backend_faulty
       - backend_average
+      - backend_faulty
 
   go_router:
     build: ./go_router
     ports:
       - "8881:9000"
+    develop:
+      watch:
+        - action: sync
+          path: ./go_router
+          target: /app
     depends_on:
       - backend_good
-      - backend_sometime_works
       - backend_faulty
       - backend_average
 
@@ -30,18 +33,18 @@ services:
     environment:
       - BACKEND_NAME="backend_good-0.1"
       - FAILURE_RATE=0.0
-      - LOAD_PER_REQUEST_S=5
-      - DOWNTIME_RATE=0.1
+      - LOAD_PER_REQUEST_S=0
+      - DOWNTIME_RATE=0
     ports:
       - "9001:9000"
 
-  backend_sometime_works:
+  backend_average:
     build: ./backends
     environment:
-      - BACKEND_NAME="backend_sometime_works-0.2"
-      - FAILURE_RATE=0.1
+      - BACKEND_NAME="backend_average-0.1"
+      - FAILURE_RATE=0.3
       - LOAD_PER_REQUEST_S=1
-      - DOWNTIME_RATEI=0.1
+      - DOWNTIME_RATE=0.3
     ports:
       - "9002:9000"
 
@@ -54,13 +57,3 @@ services:
       - DOWNTIME_RATE=0
     ports:
       - "9003:9000"
-
-  backend_average:
-    build: ./backends
-    environment:
-      - BACKEND_NAME="backend_average-0.1"
-      - FAILURE_RATE=0.1
-      - LOAD_PER_REQUEST_S=3
-      - DOWNTIME_RATE=0.1
-    ports:
-      - "9004:9000"

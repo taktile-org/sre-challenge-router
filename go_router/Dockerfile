@@ -1,18 +1,12 @@
 # Use official Golang image to build the application
-FROM golang:1.20 AS builder
+FROM golang:1.23
 
 WORKDIR /app
 COPY main.go .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go_router main.go
+RUN go install github.com/mitranim/gow@latest
 
-
-# Use a minimal base image to run the binary
-FROM alpine:latest
-
-WORKDIR /root/
-COPY --from=builder /app/go_router .
 EXPOSE 9000
 
 # Run the Go application
-CMD ["./go_router"]
+CMD ["gow", "run", "main.go"]
 
