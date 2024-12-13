@@ -1,10 +1,14 @@
-version: '3.8'
-
 services:
   python_router:
+
     build: ./python_router
     ports:
       - "8880:9000"
+    develop:
+      watch:
+        - action: sync
+          path: ./python_router
+          target: /app
     depends_on:
       - backend_good
       - backend_sometime_works
