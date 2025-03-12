@@ -2,7 +2,7 @@
 
 ## Objective
 
-Your task is to write a router that takes into account multiple metrics and returns the best route for a given request.
+Your task is to write a router (Load Balancer) that takes into account multiple metrics and returns the best route for a given request.
 
 ## Specifications
 
